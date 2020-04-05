@@ -1,25 +1,36 @@
-Feature: Guess the word
+#language: ru
 
-  @tets
-  Scenario: Maker starts a game
-    When test
+@all 
+Функционал: Тестирование
 
-# @all 
-# Функционал: Тестирование
+@all @find_by_status
+Структура сценария: Проверка функционала "получение списка животных по статусу"
+  Допустим отправляем "GET" запрос по адресу "https://petstore.swagger.io/v2/pet/" с параметром "<Параметр>"
+  Тогда получаем ответ и проверяем что код ответа равен "<Код>"
+  Тогда в теле ответа "<Ответ>"
 
-# @tets
-# Сценарий: тест
-#   Допустим тестим
+  Примеры:
+  |         Параметр              | Код |    Ответ   |
+  | findByStatus?status=available | 200 | valid_json |
+  | findByStatus?status=pending   | 200 | valid_json |
+  | findByStatus?status=sold      | 200 | valid_json |
+  | findByStatus?status=wrong     | 400 |   none     |
 
-# @all @find_by_status
-# Структура сценария: Проверка функционала "получение списка животных по статусу"
-#   Допустим отправляем запрос по адресу "https://petstore.swagger.io/v2/pet/" с параметром "<Параметр>"
-#   Тогда получаем ответ и проверяем что код ответа равен "<Код>"
-#   Тогда в теле ответа "<Ответ>"
+@all @create_pet
+Структура сценария: Проверка функционала "создание животного"
+  Допустим создали новое животное со статусом "<Статус>"
+  Допустим отправляем "POST" запрос по адресу "https://petstore.swagger.io/v2/pet/" с параметром "id"
+  Тогда получаем ответ и проверяем что код ответа равен "<Код>"
+  Тогда в теле ответа "<Ответ>"
+  И в ответе пришло созданное животное
+  Допустим отправляем "GET" запрос по адресу "https://petstore.swagger.io/v2/pet/" с параметром "id"
+  Тогда получаем ответ и проверяем что код ответа равен "<Код>"
+  Тогда в теле ответа "<Ответ>"
+  И в ответе пришло созданное животное
 
-#   Примеры:
-#   |         Параметр              | Код |    Ответ   |
-#   | findByStatus?status=available | 200 | valid_json |
-#   | findByStatus?status=pending   | 200 | valid_json |
-#   | findByStatus?status=sold      | 200 | valid_json |
-#   | wrong_test_endpoint           | 400 |   none     |
+  Примеры:
+  |   Статус   | Код |    Ответ   |
+  |  available | 200 | valid_json |
+  |  pending   | 200 | valid_json |
+  |  sold      | 200 | valid_json |
+  |  wrong     | 400 |   none     |

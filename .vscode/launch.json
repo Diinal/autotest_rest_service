@@ -8,6 +8,13 @@
             "name": "Cucumber",
             "type": "Ruby",
             "request": "launch",
+            "program": "${workspaceRoot}/bin/cucumber",
+            "args": ["-t", "@find_by_status"]
+        },
+        {
+            "name": "Cucumber_wrong",
+            "type": "Ruby",
+            "request": "launch",
             "program": "C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/cucumber-3.1.2/bin/cucumber",
             "args": ["-t", "@tets"]
         }
