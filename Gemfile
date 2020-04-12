@@ -4,4 +4,5 @@ source 'https://rubygems.org' do
     gem 'json'
     gem 'ruby-debug-ide'
     gem 'solargraph'
+    gem 'json-compare'
 end
