@@ -5,4 +5,5 @@ source 'https://rubygems.org' do
     gem 'ruby-debug-ide'
     gem 'solargraph'
     gem 'json-compare'
+    gem 'uri'
 end

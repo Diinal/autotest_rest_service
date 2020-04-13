@@ -2,6 +2,7 @@
 require 'httparty'
 require 'json'
 require 'json-compare'
+require 'uri'
 
 # $RESPONSE_BODY = nil
 # $RESPONSE_STATUS_CODE = nil
@@ -15,7 +16,16 @@ def do_request(method, url, body=nil)
   if method == "GET"
     response = HTTParty.get(url)
   elsif method == "POST"
-    response = HTTParty.post(url, :body => body, :headers => { 'Content-Type' => 'application/json'} )
+    if body
+      if body.include?('&')
+        content_type = 'application/x-www-form-urlencoded'
+      else
+        content_type = 'application/json'
+      end
+    end
+    response = HTTParty.post(url, :body => body, :headers => { 'Content-Type' => content_type} )
+  elsif method = "DELETE"
+    response = HTTParty.delete(url, :headers => {'api_key' => Random.new.rand(10001..99999).to_s})
   end
   $RESPONSE_STATUS_CODE = response.code
   $RESPONSE_BODY = response.body
@@ -72,6 +82,17 @@ def create_json(type, status=nil)
   end
 
   JSON.dump(json)
+end
+
+def update_pet()
+  pet = JSON.parse($PET)
+  new_name = "#{Random.new.rand(10001..99999)}"
+  new_status = (["available", "pending", "sold"] - [pet["status"]]).sample
+  
+  $PET['name'] = new_name
+  $PET['status'] = new_status
+
+  URI.encode_www_form([["name", new_name], ["status", new_status]])
 end
 
 def compare_json(first, second)

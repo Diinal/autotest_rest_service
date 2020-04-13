@@ -17,7 +17,11 @@ end
   $REQUEST_BODY = $PET
 end
 
-И(/^в ответе пришло созданное животное$/) do
+Допустим(/^обновили данные по животному$/) do
+  $REQUEST_BODY = update_pet()
+end
+
+И(/^в ответе пришло .* животное$/) do
   created_pet = JSON.parse($PET)
   response_pet = JSON.parse($RESPONSE_BODY)
 
