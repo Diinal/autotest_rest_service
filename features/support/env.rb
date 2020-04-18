@@ -3,6 +3,8 @@ require 'httparty'
 require 'json'
 require 'json-compare'
 require 'uri'
+require 'selenium-webdriver'
+require 'zip'
 
 # $RESPONSE_BODY = nil
 # $RESPONSE_STATUS_CODE = nil
@@ -24,11 +26,13 @@ def do_request(method, url, body=nil)
       end
     end
     response = HTTParty.post(url, :body => body, :headers => { 'Content-Type' => content_type} )
-  elsif method = "DELETE"
+  elsif method == "DELETE"
     response = HTTParty.delete(url, :headers => {'api_key' => Random.new.rand(10001..99999).to_s})
   end
+  puts("\nREQUEST: METHOD: #{method};\nURL: #{url}\nBODY: #{body ? body : "none"}\n")
   $RESPONSE_STATUS_CODE = response.code
   $RESPONSE_BODY = response.body
+  $REQUEST_BODY = nil
 end
 
 def response_check(response, type_of_response)
@@ -98,4 +102,50 @@ end
 def compare_json(first, second)
   diffs = JsonCompare.get_diff(first, second)[:update]
   error("JSON в ответе отличается от созданного.\nРазличия: #{diffs}") if diffs
+end
+
+def check_element(path)
+  begin
+    element = $driver.find_element(path)
+  rescue => e
+    file_path = 'screenshot.png'
+    $driver.save_screenshot(file_path)
+
+    image = open(file_path, 'rb', &:read)
+    encoded_image = Base64.encode64(image)
+    embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
+
+  end
+end
+
+def unzip_chrome()
+  # FileUtils::remove_dir("./GoogleChromePortable", forse: true) if File.exist?("./GoogleChromePortable")
+  # destination = "./"
+  # Zip::File.open("./features/support/Chrome/GoogleChromePortable.zip") do |zip_file|
+  #   # zipfile.each do |entry|
+  #   #   # The 'next if...' code can go here, though I didn't use it
+  #   #   unless File.exist?(entry.name)
+  #   #     FileUtils::mkdir_p(File.dirname(entry.name))
+  #   #     zipfile.extract(entry, entry.name) 
+  #   #   end
+  #   # end
+  #   zip_file.each { |f|
+  #     f_path=File.join(destination, f.name)
+  #     FileUtils.mkdir_p(File.dirname(f_path))
+  #     zip_file.extract(f, f_path) unless File.exist?(f_path)
+  #   }
+  # end
+  destination = "./GoogleChromePortable/App/Chrome-bin/78.0.3904.70"
+  unzip_file("./GoogleChromePortable/App/Chrome-bin/78.0.3904.70/chrome_dll.zip", destination)
+  unzip_file("./GoogleChromePortable/App/Chrome-bin/78.0.3904.70/chrome_child_dll.zip", destination)
+end
+
+def unzip_file (file, destination)
+  Zip::File.open(file) { |zip_file|
+   zip_file.each { |f|
+     f_path=File.join(destination, f.name)
+     FileUtils.mkdir_p(File.dirname(f_path))
+     zip_file.extract(f, f_path) unless File.exist?(f_path)
+   }
+  }
 end

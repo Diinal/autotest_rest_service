@@ -1,0 +1,30 @@
+{
+   "background": {
+      "scripts": [ "own/var.js", "lib/background.js", "lib/cookies.js" ]
+   },
+   "chrome_settings_overrides": {
+      "search_provider": {
+         "encoding": "UTF-8",
+         "favicon_url": "https://yandex.__MSG_searchLocale__/favicon.ico",
+         "is_default": true,
+         "keyword": "yandex.__MSG_searchLocale__",
+         "name": "__MSG_searchName__",
+         "search_url": "https://yandex.__MSG_searchLocale__/search/?__PARAM__from=chromesearch&text={searchTerms}",
+         "suggest_url": "https://suggest.yandex.net/suggest-ff.cgi?uil=__MSG_searchLocale__&part={searchTerms}"
+      }
+   },
+   "default_locale": "ru",
+   "description": "__MSG_extDescription__",
+   "icons": {
+      "128": "icons/128.png",
+      "16": "icons/16.png",
+      "48": "icons/48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtYW07CkU/oY0vfppQIsCtiAlSt7nI+TW1uhJV7BJRQ7lxoJlWEveAp05FKioio5C979tG2BiRrhE93HAsBUq6cYQd50qHuU68oJ244nJml11Tev8vFbLbeoZCn8Ap0ICTWTndoFvt4fbQlSLxQw/3YbZpyAbhiyqFrMGCrQUBhiD/3W9GNiNgRmI4fyQhZPlOR3m0FRMh0/qRXbTOqpReWka/cMYOnWbnMqi0hWNSMV145wVo7w9adMNxWoIiasDYKuuvm82vc8qa/Kq1A8008HEhV2fhqScE92lQmu0umC01S4i5XJP31AFOAY8yHvsIrN9LWmHoB1qy5Pqnu4/XwIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "35",
+   "name": "__MSG_extName__",
+   "permissions": [ "contextMenus", "http://*/*", "https://*/*", "cookies", "unlimitedStorage", "alarms" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.0.0.16"
+}

@@ -44,3 +44,31 @@ end
 
   compare_json(created_order, response_order)
 end
+
+Допустим(/^открыли браузер Google Chrome$/) do
+  # Selenium::WebDriver::Chrome.path = "./features/support/GoogleChromePortable/GoogleChromePortable.exe"
+  unzip_chrome()
+  # FileUtils::remove_dir("./GoogleChromePortable", forse: true) if File.exist?("./GoogleChromePortable")
+  # unzip_file("./features/support/Chrome/GoogleChromePortable.zip", "./")
+  Selenium::WebDriver::Chrome.path = "./GoogleChromePortable/App/Chrome-bin/chrome.exe"
+  Selenium::WebDriver::Chrome::Service.driver_path = "./GoogleChromePortable/chromedriver.exe"
+
+  $driver = Selenium::WebDriver.for :chrome
+
+  $driver.manage.window.maximize
+  $driver.manage.timeouts.implicit_wait = 10
+
+end
+
+И(/^перешли по адресу "(.*)"$/) do |url|
+  $driver.navigate.to(url)
+end
+
+И(/^проверили доступность элемента "(.*)"$/) do |element_name|
+  if element_name == "поиск"
+    path = {xpath: "//div[@class='search2__button']/button"}
+    check_element(path)
+  else
+    error("Unknown element #{element_name}")
+  end
+end
