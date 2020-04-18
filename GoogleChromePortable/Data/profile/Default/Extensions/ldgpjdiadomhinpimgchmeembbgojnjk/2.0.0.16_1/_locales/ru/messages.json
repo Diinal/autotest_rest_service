@@ -1,0 +1,18 @@
+{
+   "extDescription": {
+      "description": "Russia",
+      "message": "Вводите запросы в адресную строку и получайте ответы от Яндекса"
+   },
+   "extName": {
+      "description": "Russia",
+      "message": "Поиск  Яндексa"
+   },
+   "searchLocale": {
+      "description": "Russia",
+      "message": "ru"
+   },
+   "searchName": {
+      "description": "Russia",
+      "message": "Яндекс"
+   }
+}

@@ -1,0 +1,18 @@
+{
+   "extDescription": {
+      "description": "Ukraine",
+      "message": "Вводьте запити в адресний рядок і отримуйте відповіді від Яндекса"
+   },
+   "extName": {
+      "description": "Ukraine",
+      "message": "Пошук Яндекса"
+   },
+   "searchLocale": {
+      "description": "Ukraine",
+      "message": "fr"
+   },
+   "searchName": {
+      "description": "Ukraine",
+      "message": "Яндекс"
+   }
+}

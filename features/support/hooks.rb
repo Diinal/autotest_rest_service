@@ -9,5 +9,5 @@ Before do
 end
 
 After do |scenario|
-  $driver ? $driver.quit : error('Something went wrong.')
+  $driver.quit if $driver
 end

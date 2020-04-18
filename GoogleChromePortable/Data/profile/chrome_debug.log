@@ -1,0 +1,5 @@
+[6000:9208:0416/220705.793:ERROR:cache_util_win.cc(21)] Unable to move the cache: Отказано в доступе. (0x5)
+[6000:9208:0416/220705.798:ERROR:cache_util.cc(141)] Unable to move cache folder C:\projects\autotest_rest_service\features\support\GoogleChromePortable\Data\profile\ShaderCache\GPUCache to C:\projects\autotest_rest_service\features\support\GoogleChromePortable\Data\profile\ShaderCache\old_GPUCache_000
+[6000:9208:0416/220705.801:ERROR:disk_cache.cc(178)] Unable to create cache
+[6000:9208:0416/220705.801:ERROR:shader_disk_cache.cc(601)] Shader Cache Creation failed: -2
+[6000:1220:0416/220706.176:WARNING:pref_notifier_impl.cc(40)] Pref observer for browser.relaunch_notification_period found at shutdown.
