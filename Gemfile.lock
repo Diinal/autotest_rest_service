@@ -6,6 +6,7 @@ GEM
     backports (3.17.0)
     benchmark (0.1.0)
     builder (3.2.4)
+    childprocess (3.0.0)
     cucumber (3.1.2)
       builder (>= 2.1.2)
       cucumber-core (~> 3.2.0)
@@ -24,6 +25,7 @@ GEM
     cucumber-wire (0.0.1)
     diff-lcs (1.3)
     e2mmap (0.1.0)
+    ffi (1.12.2-x64-mingw32)
     gherkin (5.1.0)
     httparty (0.18.0)
       mime-types (~> 3.0)
@@ -60,6 +62,10 @@ GEM
     ruby-debug-ide (0.7.0)
       rake (>= 0.8.1)
     ruby-progressbar (1.10.1)
+    rubyzip (2.3.0)
+    selenium-webdriver (3.142.7)
+      childprocess (>= 0.5, < 4.0)
+      rubyzip (>= 1.2.2)
     solargraph (0.38.6)
       backport (~> 1.1)
       benchmark
@@ -79,18 +85,22 @@ GEM
     unicode-display_width (1.7.0)
     uri (0.10.0)
     yard (0.9.24)
+    zip (2.0.2)
 
 PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
   cucumber!
+  ffi!
   httparty!
   json!
   json-compare!
   ruby-debug-ide!
+  selenium-webdriver!
   solargraph!
   uri!
+  zip!
 
 BUNDLED WITH
    1.17.2

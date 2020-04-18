@@ -6,4 +6,7 @@ source 'https://rubygems.org' do
     gem 'solargraph'
     gem 'json-compare'
     gem 'uri'
+    gem 'selenium-webdriver'
+    gem 'ffi'
+    gem 'zip'
 end

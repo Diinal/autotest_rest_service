@@ -5,4 +5,9 @@ Before do
   $PET_ID = nil
   $ORDER = nil
   $ORDER_ID = nil
+  $driver = nil
+end
+
+After do |scenario|
+  $driver ? $driver.quit : error('Something went wrong.')
 end
