@@ -46,10 +46,7 @@ end
 end
 
 Допустим(/^открыли браузер Google Chrome$/) do
-  # Selenium::WebDriver::Chrome.path = "./features/support/GoogleChromePortable/GoogleChromePortable.exe"
   unzip_chrome()
-  # FileUtils::remove_dir("./GoogleChromePortable", forse: true) if File.exist?("./GoogleChromePortable")
-  # unzip_file("./features/support/Chrome/GoogleChromePortable.zip", "./")
   Selenium::WebDriver::Chrome.path = "./GoogleChromePortable/App/Chrome-bin/chrome.exe"
   Selenium::WebDriver::Chrome::Service.driver_path = "./GoogleChromePortable/chromedriver.exe"
 
@@ -57,7 +54,6 @@ end
 
   $driver.manage.window.maximize
   $driver.manage.timeouts.implicit_wait = 10
-
 end
 
 И(/^перешли по адресу "(.*)"$/) do |url|

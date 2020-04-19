@@ -9,4 +9,5 @@ source 'https://rubygems.org' do
     gem 'selenium-webdriver'
     gem 'ffi'
     gem 'zip'
+    gem 'pg'
 end

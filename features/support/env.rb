@@ -5,10 +5,13 @@ require 'json-compare'
 require 'uri'
 require 'selenium-webdriver'
 require 'zip'
+require 'pg'
 
-# $RESPONSE_BODY = nil
-# $RESPONSE_STATUS_CODE = nil
-# $PET = nil
+if ARGV.include?('Jenkins=true')
+  $DbLogEnable = ENV['DbLogEnable']
+else
+  $DbLogEnable = true
+end
 
 def error(message)
   raise(message)
@@ -119,22 +122,6 @@ def check_element(path)
 end
 
 def unzip_chrome()
-  # FileUtils::remove_dir("./GoogleChromePortable", forse: true) if File.exist?("./GoogleChromePortable")
-  # destination = "./"
-  # Zip::File.open("./features/support/Chrome/GoogleChromePortable.zip") do |zip_file|
-  #   # zipfile.each do |entry|
-  #   #   # The 'next if...' code can go here, though I didn't use it
-  #   #   unless File.exist?(entry.name)
-  #   #     FileUtils::mkdir_p(File.dirname(entry.name))
-  #   #     zipfile.extract(entry, entry.name) 
-  #   #   end
-  #   # end
-  #   zip_file.each { |f|
-  #     f_path=File.join(destination, f.name)
-  #     FileUtils.mkdir_p(File.dirname(f_path))
-  #     zip_file.extract(f, f_path) unless File.exist?(f_path)
-  #   }
-  # end
   destination = "./GoogleChromePortable/App/Chrome-bin/78.0.3904.70"
   unzip_file("./GoogleChromePortable/App/Chrome-bin/78.0.3904.70/chrome_dll.zip", destination)
   unzip_file("./GoogleChromePortable/App/Chrome-bin/78.0.3904.70/chrome_child_dll.zip", destination)
@@ -148,4 +135,36 @@ def unzip_file (file, destination)
      zip_file.extract(f, f_path) unless File.exist?(f_path)
    }
   }
+end
+
+def db_log(scenario_name, step_name, result, error=nil)
+  error = "null" if not error
+  begin
+    con = PG.connect(:dbname => 'AutotestPetService', :user => 'autotest', :password => 'poxyi')
+
+    sqlQuery = "INSERT INTO \"AutotestLog\" (\"ID\", \"LOGTIME\", \"SCENARIO_NAME\", \"STEP_NAME\", \"STEP_RESULT\", \"ERROR\") 
+    VALUES (default, current_timestamp, '#{scenario_name}', '#{step_name}', '#{result}', '#{error}');"
+    con.exec(sqlQuery)
+
+  rescue => e
+    puts(e.message)
+  ensure
+    con.close if con
+  end
+
+  a = 0
+end
+
+if $DbLogEnable == nil
+  $DbLogEnable = true
+else
+  $DbLogEnable = if $DbLogEnable.to_s.casecamp?('true')
+                  true
+                else
+                  if $DbLogEnable.to_s.casecamp?('false')
+                    false
+                  else
+                    error("Недопустимое значение DbLogEnable #{$DbLogEnable}")
+                  end
+                end
 end
