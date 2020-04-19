@@ -16,7 +16,7 @@ After do |scenario|
   $step_num -= max_step_num if $step_num > max_step_num
   $driver.quit if $driver
   error = scenario.exception
-  step_name = $scenario.test_steps[$step_num].source[4].text
+  step_name = ($scenario.test_steps[$step_num].source[4] ? $scenario.test_steps[$step_num].source[4].text : $scenario.test_steps[$step_num].source[2].text)
   db_log($scenario_name, step_name, "failed", error.to_s) if error and $DbLogEnable
 
   a = 0
