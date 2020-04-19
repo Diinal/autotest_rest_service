@@ -112,7 +112,7 @@ end
 
 def check_element(path)
   begin
-    element = $driver.find_element(path)
+    element = $driver.find_element(error_path)
   rescue => e
     file_path = 'screenshot.png'
     $driver.save_screenshot(file_path)
