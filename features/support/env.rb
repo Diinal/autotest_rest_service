@@ -7,8 +7,11 @@ require 'selenium-webdriver'
 require 'zip'
 require 'pg'
 
-
-$DbLogEnable = true
+if ARGV.include?('Jenkins=true')
+  $DbLogEnable = ENV['DbLogEnable']
+else
+  $DbLogEnable = true
+end
 
 def error(message)
   raise(message)
@@ -150,4 +153,18 @@ def db_log(scenario_name, step_name, result, error=nil)
   end
 
   a = 0
+end
+
+if $DbLogEnable == nil
+  $DbLogEnable = true
+else
+  $DbLogEnable = if $DbLogEnable.to_s.casecamp?('true')
+                  true
+                else
+                  if $DbLogEnable.to_s.casecamp?('false')
+                    false
+                  else
+                    error("Недопустимое значение DbLogEnable #{$DbLogEnable}")
+                  end
+                end
 end
