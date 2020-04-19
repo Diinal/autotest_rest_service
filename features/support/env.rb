@@ -114,7 +114,7 @@ def check_element(path)
   begin
     element = $driver.find_element(error_path)
   rescue => e
-    file_path = 'screenshot.png'
+    file_path = './screenshot.png'
     $driver.save_screenshot(file_path)
 
     image = open(file_path, 'rb', &:read)
