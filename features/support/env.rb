@@ -118,9 +118,10 @@ def check_element(path)
     $driver.save_screenshot(file_path)
 
     image = open(file_path, 'rb', &:read)
-    encoded_image = Base64.encode64(image)
-    embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
-
+    # encoded_image = Base64.encode64(image)
+    # embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
+    embed(image, 'image/png', 'SCREENSHOT')
+    error("Элемент не найден")
   end
 end
 
