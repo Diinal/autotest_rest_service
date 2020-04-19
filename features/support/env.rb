@@ -10,7 +10,7 @@ require 'pg'
 if ARGV.include?('Jenkins=true')
   $DbLogEnable = ENV['DbLogEnable']
 else
-  $DbLogEnable = true
+  $DbLogEnable = false
 end
 
 def error(message)
