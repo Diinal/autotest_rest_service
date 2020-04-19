@@ -112,7 +112,7 @@ end
 
 def check_element(path)
   begin
-    element = $driver.find_element(error_path)
+    element = $driver.find_element(path)
   rescue => e
     png = $driver.screenshot_as(:png)
     path = (0..16).to_a.map{|a| rand(16).to_s(16)}.join + '.png'
