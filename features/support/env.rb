@@ -114,17 +114,8 @@ def check_element(path)
   begin
     element = $driver.find_element(error_path)
   rescue => e
-    file_path = './screenshot.png'
-    # $driver.save_screenshot(file_path)
-
-    # image = open(file_path, 'rb', &:read)
-    # # encoded_image = Base64.encode64(image)
-    # # embed(encoded_image, 'image/png;base64', 'SCREENSHOT')
-    # embed(image, 'image/png', 'SCREENSHOT')
-    # encoded_img = $driver.screenshot_as(:base64)
-    # embed("data:image/png;base64,#{encoded_img}",'image/png')
     png = $driver.screenshot_as(:png)
-    path = (0..16).to_a.map{|a| rand(16).to_s(16)}.join + '.png' # Or use some GUID library to make a unique filename - scenario names are not  guaranteed to be unique.
+    path = (0..16).to_a.map{|a| rand(16).to_s(16)}.join + '.png'
     File.open(path, 'wb') {|io| io.write(png)}
     embed(path, 'image/png')
     error("Элемент не найден")
