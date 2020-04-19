@@ -1,4 +1,5 @@
 
+require './features/support/logs.rb'
 require 'httparty'
 require 'json'
 require 'json-compare'
@@ -8,9 +9,11 @@ require 'zip'
 require 'pg'
 
 if ARGV.include?('Jenkins=true')
-  $DbLogEnable = ENV['DbLogEnable']
+  $DbLogEnable  = ENV['DbLogEnable']
+  $JenkinsRun   = true
 else
-  $DbLogEnable = false
+  $DbLogEnable  = false
+  $JenkinsRun   = false
 end
 
 def error(message)
@@ -32,7 +35,7 @@ def do_request(method, url, body=nil)
   elsif method == "DELETE"
     response = HTTParty.delete(url, :headers => {'api_key' => Random.new.rand(10001..99999).to_s})
   end
-  puts("\nREQUEST: METHOD: #{method};\nURL: #{url}\nBODY: #{body ? body : "none"}\n")
+  log("REQUEST: METHOD: #{method};\nURL: #{url}\nBODY: #{body ? body : "none"}\n")
   $RESPONSE_STATUS_CODE = response.code
   $RESPONSE_BODY = response.body
   $REQUEST_BODY = nil
@@ -147,7 +150,7 @@ def db_log(scenario_name, step_name, result, error=nil)
     con.exec(sqlQuery)
 
   rescue => e
-    puts(e.message)
+    log(e.message)
   ensure
     con.close if con
   end
