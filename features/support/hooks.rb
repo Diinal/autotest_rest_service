@@ -23,7 +23,7 @@ After do |scenario|
 end
 
 AfterStep do |sc|
-  step_name = $scenario.test_steps[$step_num].source[4].text
+  step_name = ($scenario.test_steps[$step_num].source[4] ? $scenario.test_steps[$step_num].source[4].text : $scenario.test_steps[$step_num].source[2].text)
   $step_num += 2
   db_log($scenario_name, step_name, "passed") if $DbLogEnable
 end
