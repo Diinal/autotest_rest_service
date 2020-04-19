@@ -158,10 +158,10 @@ end
 if $DbLogEnable == nil
   $DbLogEnable = true
 else
-  $DbLogEnable = if $DbLogEnable.to_s.casecamp?('true')
+  $DbLogEnable = if $DbLogEnable.to_s.casecmp?('true')
                   true
                 else
-                  if $DbLogEnable.to_s.casecamp?('false')
+                  if $DbLogEnable.to_s.casecmp?('false')
                     false
                   else
                     error("Недопустимое значение DbLogEnable #{$DbLogEnable}")
