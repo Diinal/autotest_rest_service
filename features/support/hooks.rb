@@ -9,24 +9,23 @@ Before do |sc|
   $ORDER = nil
   $ORDER_ID = nil
   $driver = nil
-
-  # log("\n#{$scenario_name}")
 end
 
 After do |scenario|
-  max_step_num = $scenario.test_steps.length - 1
-  $step_num -= max_step_num if $step_num > max_step_num
-  $driver.quit if $driver
   error = scenario.exception
   step_name = ($scenario.test_steps[$step_num].source[4] ? $scenario.test_steps[$step_num].source[4].text : $scenario.test_steps[$step_num].source[2].text)
   db_log($scenario_name, step_name, "failed", error.to_s) if error and $DbLogEnable
-
-  a = 0
+  if error.to_s == "Элемент не найден"
+    png = $driver.screenshot_as(:png)
+    path = (0..16).to_a.map{|a| rand(16).to_s(16)}.join + '.png'
+    File.open(path, 'wb') {|io| io.write(png)}
+    embed(path, 'image/png')
+  end
+  $driver.quit if $driver
 end
 
-AfterStep do |sc|
-  step_name = ($scenario.test_steps[$step_num].source[4] ? $scenario.test_steps[$step_num].source[4].text : $scenario.test_steps[$step_num].source[2].text)
-  # log(step_name)
-  $step_num += 2
+AfterStep do |_result, step|
+  $step_num = ($step_num + 2) % $scenario.test_steps.length
+  step_name = step.text
   db_log($scenario_name, step_name, "passed") if $DbLogEnable
 end
